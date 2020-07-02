@@ -53,7 +53,23 @@ const init = async () => {
     method: 'GET',
     path: '/',
     handler: (req, h) => {
-      return h.view('index', { title: 'Home' })
+      return h.view('index', { title: 'Home' });
+    }
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/register',
+    handler: (req, h) => {
+      return h.view('register', { title: 'Registro' });
+    }
+  });
+
+  server.route({
+    method: 'POST',
+    path: '/sing-in',
+    handler: (req, h) => {
+      return 'user created';
     }
   });
 
