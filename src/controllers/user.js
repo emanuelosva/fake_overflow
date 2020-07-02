@@ -10,14 +10,13 @@ const createUser = async (req, h) => {
   try {
     const result = await usersModel.create({ ...req.payload });
 
-    if (!result) {
-      return h.response('Internal Error').code(500);
-    }
-
     return h.redirect('/login');
   } catch (error) {
     console.error(`[usersController] Error: ${error}`);
-    return h.response('Problemas creando el usuario').code(500)
+    return h.view('register', {
+      title: 'Registro',
+      error: 'Error creando el usuario',
+    });
   }
 };
 
@@ -26,7 +25,10 @@ const loginUser = async (req, h) => {
     const result = await usersModel.validateUser({ ...req.payload });
 
     if (!result) {
-      return h.response('Credenciales invalidas').code(401)
+      return h.view('login', {
+        title: 'Login - Error',
+        error: 'Credenciales invalidas',
+      })
     }
 
     return h.redirect('/')
@@ -36,7 +38,11 @@ const loginUser = async (req, h) => {
       });
   } catch (error) {
     console.error(`[usersController] Error: ${error}`);
-    return h.response('Internal server error').code(500)
+    return h.view('500', {
+      title: 'Internal Error',
+      error: 'Probelmas del servidor',
+      message: 'Lo resolveremos lo anter posible',
+    })
   }
 };
 
