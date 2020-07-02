@@ -11,7 +11,12 @@ const renderRegisterView = (req, h) => {
   return h.view('register', { title: 'Registro' });
 };
 
+const renderLoginView = (req, h) => {
+  return h.view('login', { title: 'Login' });
+};
+
 module.exports = {
   renderHomeView,
   renderRegisterView,
+  renderLoginView,
 };
