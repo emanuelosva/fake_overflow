@@ -13,6 +13,8 @@ const renderHomeView = (req, h) => {
 }
 
 const renderRegisterView = (req, h) => {
+  if (req.state.user) return h.redirect('/');
+
   return h.view('register', {
     title: 'Registro',
     user: req.state.user
@@ -20,6 +22,8 @@ const renderRegisterView = (req, h) => {
 };
 
 const renderLoginView = (req, h) => {
+  if (req.state.user) return h.redirect('/');
+
   return h.view('login', {
     title: 'Login',
     user: req.state.user
