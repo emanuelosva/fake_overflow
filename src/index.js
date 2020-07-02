@@ -56,10 +56,21 @@ const init = async () => {
     console.log(`Server running on ${server.info.uri}`);
 
   } catch (error) {
-    console.error(`Server error: ${err}`);
+    console.error(`Server error: ${error}`);
     process.exit(1);
   }
 };
+
+// Unhandle errors
+process.on('unhandledRejection', err => {
+  console.error(`[UnhandleRejection] -> ${err.message}`, err);
+  process.exit(1);
+});
+
+process.on('uncaughtException', err => {
+  console.error(`[uncaughtException] -> ${err.message}`, err);
+  process.exit(1);
+});
 
 // Server execution
 init();

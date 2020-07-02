@@ -11,7 +11,8 @@ module.exports = [
     options: {
       validate: {
         payload: validSchema.userRegisterSchema,
-      }
+        failAction: userController.failValidation,
+      },
     },
     handler: userController.createUser,
   },
@@ -23,7 +24,8 @@ module.exports = [
     options: {
       validate: {
         payload: validSchema.userLoginSchema,
-      }
+        failAction: userController.failValidation,
+      },
     },
     handler: userController.loginUser,
   },
