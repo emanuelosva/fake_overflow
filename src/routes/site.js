@@ -30,4 +30,11 @@ module.exports = [
     path: '/register',
     handler: siteController.renderRegisterView,
   },
+
+  // login view
+  {
+    method: 'GET',
+    path: '/login',
+    handler: siteController.renderLoginView,
+  },
 ];

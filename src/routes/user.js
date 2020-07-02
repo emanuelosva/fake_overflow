@@ -15,4 +15,16 @@ module.exports = [
     },
     handler: userController.createUser,
   },
+
+  // Login user
+  {
+    method: 'POST',
+    path: '/user/validate',
+    options: {
+      validate: {
+        payload: validSchema.userLoginSchema,
+      }
+    },
+    handler: userController.validateUser,
+  },
 ];
