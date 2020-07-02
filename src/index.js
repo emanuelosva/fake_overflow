@@ -7,6 +7,8 @@ const handlebars = require('handlebars');
 const path = require('path');
 const config = require('../config');
 
+const siteController = require('./controllers/site');
+
 const siteRoutes = require('./routes/site');
 const userRoutes = require('./routes/user');
 
@@ -48,8 +50,9 @@ const init = async () => {
     });
 
     // Routes
-    server.route(siteRoutes);
+    server.ext('onPreResponse', siteController.fileNotFound);
     server.route(userRoutes);
+    server.route(siteRoutes);
 
     // Start server
     await server.start();

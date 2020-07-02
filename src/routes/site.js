@@ -8,7 +8,7 @@ const siteController = require('../controllers/site');
 module.exports = [
   {
     method: 'GET',
-    path: '/{param*}',
+    path: '/assets/{param*}',
     handler: {
       directory: {
         path: '.',
@@ -36,5 +36,11 @@ module.exports = [
     method: 'GET',
     path: '/login',
     handler: siteController.renderLoginView,
+  },
+
+  {
+    method: ['GET', 'POST'],
+    path: '/{any*}',
+    handler: siteController.notFoundResponse,
   },
 ];

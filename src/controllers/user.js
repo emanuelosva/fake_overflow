@@ -28,7 +28,7 @@ const loginUser = async (req, h) => {
       return h.view('login', {
         title: 'Login - Error',
         error: 'Credenciales invalidas',
-      })
+      });
     }
 
     return h.redirect('/')
@@ -38,11 +38,8 @@ const loginUser = async (req, h) => {
       });
   } catch (error) {
     console.error(`[usersController] Error: ${error}`);
-    return h.view('500', {
-      title: 'Internal Error',
-      error: 'Probelmas del servidor',
-      message: 'Lo resolveremos lo anter posible',
-    })
+
+    return h.view('500', {}, { layout: 'error-layout' });
   }
 };
 
@@ -51,7 +48,23 @@ const logoutUser = async (req, h) => {
 };
 
 const failValidation = async (req, h, err) => {
-  return Boom.badRequest('Validación fallida', req.payload);
+  const accept = req.headers.accept;
+
+  if (accept && accept.match(/json/)) {
+    return Boom.badRequest('Validación fallida', req.payload);
+  }
+
+  const routes = {
+    '/login': 'login',
+    '/register': 'register',
+  };
+  const view = routes[req.path];
+
+  return h.view(view, {
+    title: 'Error de validación',
+    error: 'El correo y contraseña deben de tener un formato valido.'
+  }).code(400).takeover();
+
 };
 
 module.exports = {
