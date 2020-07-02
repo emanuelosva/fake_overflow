@@ -9,6 +9,13 @@ const userRegisterSchema = Joi.object({
     .pattern(new RegExp('^[a-zA-Z0-9]{6,40}$')),
 });
 
+const userLoginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string()
+    .pattern(new RegExp('^[a-zA-Z0-9]{6,40}$')),
+});
+
 module.exports = {
   userRegisterSchema,
+  userLoginSchema
 };
