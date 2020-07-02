@@ -9,7 +9,11 @@ const createUser = async (req, h) => {
   try {
     const result = await usersModel.create({ ...req.payload });
 
-    return h.response(`Usuario creado. ID: ${result}`);
+    if (!result) {
+      return h.response('Internal Error').code(500);
+    }
+
+    return h.redirect('/login');
   } catch (error) {
     console.error(`[usersController] Error: ${error}`);
     return h.response('Problemas creando el usuario').code(500)
