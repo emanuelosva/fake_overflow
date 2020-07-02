@@ -3,10 +3,10 @@
 */
 'use strict'
 
-const registerUser = (req, h) => {
+const createUser = (req, h) => {
   return 'user created';
 }
 
 module.exports = {
-  registerUser,
+  createUser,
 }

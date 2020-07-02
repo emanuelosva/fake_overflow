@@ -13,6 +13,6 @@ module.exports = [
         payload: validSchema.userRegisterSchema,
       }
     },
-    handler: userController.registerUser,
+    handler: userController.createUser,
   },
 ];
