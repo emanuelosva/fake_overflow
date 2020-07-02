@@ -7,7 +7,7 @@ module.exports = [
   // Create user by POST
   {
     method: 'POST',
-    path: '/user/sing-in',
+    path: '/user/singup',
     options: {
       validate: {
         payload: validSchema.userRegisterSchema,
@@ -19,7 +19,7 @@ module.exports = [
   // Login user
   {
     method: 'POST',
-    path: '/user/validate',
+    path: '/user/login',
     options: {
       validate: {
         payload: validSchema.userLoginSchema,
