@@ -7,7 +7,8 @@ const handlebars = require('handlebars');
 const path = require('path');
 const config = require('../config');
 
-const routes = require('./routes');
+const siteRoutes = require('./routes/site');
+const userRoutes = require('./routes/user');
 
 
 // Server initialization
@@ -38,7 +39,8 @@ const init = async () => {
     });
 
     // Routes
-    server.route(routes);
+    server.route(siteRoutes);
+    server.route(userRoutes);
 
     // Start server
     await server.start();
