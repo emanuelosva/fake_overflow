@@ -7,7 +7,7 @@ module.exports = [
   // Create user by POST
   {
     method: 'POST',
-    path: '/user/singup',
+    path: '/singup',
     options: {
       validate: {
         payload: validSchema.userRegisterSchema,
@@ -19,12 +19,19 @@ module.exports = [
   // Login user
   {
     method: 'POST',
-    path: '/user/login',
+    path: '/login',
     options: {
       validate: {
         payload: validSchema.userLoginSchema,
       }
     },
-    handler: userController.validateUser,
+    handler: userController.loginUser,
+  },
+
+  // Logout user
+  {
+    method: 'GET',
+    path: '/logout',
+    handler: userController.logoutUser,
   },
 ];

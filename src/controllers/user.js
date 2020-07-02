@@ -20,7 +20,7 @@ const createUser = async (req, h) => {
   }
 };
 
-const validateUser = async (req, h) => {
+const loginUser = async (req, h) => {
   try {
     const result = await usersModel.validateUser({ ...req.payload });
 
@@ -39,7 +39,12 @@ const validateUser = async (req, h) => {
   }
 };
 
+const logoutUser = async (req, h) => {
+  return h.redirect('/login').unstate('user');
+};
+
 module.exports = {
   createUser,
-  validateUser
+  loginUser,
+  logoutUser,
 };
