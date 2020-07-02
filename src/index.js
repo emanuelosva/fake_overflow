@@ -10,6 +10,8 @@ const config = require('../config');
 const siteRoutes = require('./routes/site');
 const userRoutes = require('./routes/user');
 
+const { DAY_IN_MILISECODS } = require('./utils/time');
+
 
 // Server initialization
 const init = async () => {
@@ -28,6 +30,13 @@ const init = async () => {
     // Plugins
     await server.register(inert);
     await server.register(vision);
+
+    //  Cokies
+    server.state('user', {
+      ttl: DAY_IN_MILISECODS * 3,
+      isSecure: process.env.NODE_ENV === 'production',
+      encoding: 'base64json',
+    });
 
     // Template engine settings
     server.views({

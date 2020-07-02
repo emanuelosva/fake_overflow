@@ -20,10 +20,18 @@ const validateUser = async (req, h) => {
   try {
     const result = await usersModel.validateUser({ ...req.payload });
 
-    return result;
+    if (!result) {
+      return h.response('Credenciales invalidas').code(401)
+    }
+
+    return h.redirect('/')
+      .state('user', {
+        name: result.name,
+        email: result.email,
+      });
   } catch (error) {
     console.error(`[usersController] Error: ${error}`);
-    return h.response('Unauthorized').code(500)
+    return h.response('Internal server error').code(500)
   }
 };
 
