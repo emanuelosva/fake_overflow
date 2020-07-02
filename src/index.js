@@ -7,6 +7,8 @@ const handlebars = require('handlebars');
 const path = require('path');
 const config = require('../config');
 
+const routes = require('./routes');
+
 
 // Server initialization
 const init = async () => {
@@ -20,64 +22,28 @@ const init = async () => {
     }
   });
 
-  // Plugins
-  try {
-    await server.register(inert);
-    await server.register(vision);
-  } catch (error) {
-    console.error(`Plugin register error: ${error}`);
-  }
-
-  // Template engine settings
-  server.views({
-    engines: { hbs: handlebars },
-    relativeTo: path.join(__dirname, '..'),
-    path: 'views',
-    layout: true,
-    layoutPath: 'views',
-  })
-
-  // Routes
-  server.route({
-    method: 'GET',
-    path: '/{param*}',
-    handler: {
-      directory: {
-        path: '.',
-        index: ['index.html']
-      }
-    }
-  });
-
-  server.route({
-    method: 'GET',
-    path: '/',
-    handler: (req, h) => {
-      return h.view('index', { title: 'Home' });
-    }
-  });
-
-  server.route({
-    method: 'GET',
-    path: '/register',
-    handler: (req, h) => {
-      return h.view('register', { title: 'Registro' });
-    }
-  });
-
-  server.route({
-    method: 'POST',
-    path: '/sing-in',
-    handler: (req, h) => {
-      return 'user created';
-    }
-  });
-
-
   // Try to up server
   try {
+    // Plugins
+    await server.register(inert);
+    await server.register(vision);
+
+    // Template engine settings
+    server.views({
+      engines: { hbs: handlebars },
+      relativeTo: path.join(__dirname, '..'),
+      path: 'views',
+      layout: true,
+      layoutPath: 'views',
+    });
+
+    // Routes
+    server.route(routes);
+
+    // Start server
     await server.start();
     console.log(`Server running on ${server.info.uri}`);
+
   } catch (error) {
     console.error(`Server error: ${err}`);
     process.exit(1);
