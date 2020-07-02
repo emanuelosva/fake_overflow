@@ -16,8 +16,14 @@ const init = async () => {
     method: 'GET',
     path: '/',
     handler: (req, h) => {
-      return 'Hello, world!';
+      return h.response('Hello, world!').code(200);
     }
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/redirect',
+    handler: (req, h) => h.redirect('https://platzi.com')
   });
 
   // Try to up server
