@@ -2,6 +2,8 @@
 
 const Hapi = require('@hapi/hapi');
 const inert = require('@hapi/inert');
+const vision = require('@hapi/vision');
+const handlebars = require('handlebars');
 const path = require('path');
 const config = require('../config');
 
@@ -21,9 +23,19 @@ const init = async () => {
   // Plugins
   try {
     await server.register(inert);
+    await server.register(vision);
   } catch (error) {
     console.error(`Plugin register error: ${error}`);
   }
+
+  // Template engine settings
+  server.views({
+    engines: { hbs: handlebars },
+    relativeTo: path.join(__dirname, '..'),
+    path: 'views',
+    layout: true,
+    layoutPath: 'views',
+  })
 
   // Routes
   server.route({
@@ -40,13 +52,9 @@ const init = async () => {
   server.route({
     method: 'GET',
     path: '/',
-    handler: (req, h) => h.redirect(`${server.info.uri}/home`)
-  });
-
-  server.route({
-    method: 'GET',
-    path: '/home',
-    handler: (req, h) => h.file('index.html')
+    handler: (req, h) => {
+      return h.view('index', { title: 'Home' })
+    }
   });
 
 
