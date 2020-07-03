@@ -31,6 +31,23 @@ const answerQuestion = async (req, h) => {
   }
 };
 
+const setAnswerRight = async (req, h) => {
+  try {
+    const result = await req.server
+      .methods
+      .setAnswerRight(
+        req.params.questionId,
+        req.params.answerId,
+        req.state.user
+      );
+
+    return h.redirect(`/question?id=${req.params.questionId}`);
+  } catch (error) {
+    console.error(`[questionController] ${error}`);
+    return internalServerErrorResponse(req, h);
+  }
+};
+
 const failValidation = async (req, h, err) => {
   const accept = req.headers.accept;
 
@@ -54,5 +71,6 @@ const failValidation = async (req, h, err) => {
 module.exports = {
   createQuestion,
   answerQuestion,
+  setAnswerRight,
   failValidation,
 };

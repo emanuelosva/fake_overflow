@@ -31,4 +31,11 @@ module.exports = [
     handler: questionController.answerQuestion,
   },
 
+  // Set right aswer
+  {
+    method: 'POST',
+    path: '/answer/{questionId}/{answerId}',
+    handler: questionController.setAnswerRight,
+  },
+
 ];
