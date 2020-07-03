@@ -6,7 +6,7 @@
   </div>
 
   {{#each question.answers as |answer key| }}
-  <div class="alert alert-info" role="alert">
+  <div class="alert {{#if answer.correct}}alert-success{{else}}alert-info{{/if}}" role="alert">
     <p>{{answer.text}}</p>
     <hr>
     <div class="container">
@@ -17,11 +17,18 @@
         <div class="col-sm text-right">
           {{#with user}}
           {{#ifEquals ../../question.owner.email ../../user.email}}
-          <a href="#" class="btn btn-primary" role="button">
-            Marca respuesta como correcta
+          {{#unless answer.correct}}
+          <a href="/answer/{{../../../key}}/{{key}}" class="btn btn-primary" role="button">
+            Marca como mejor respuesta
           </a>
+          {{/unless}}
           {{/ifEquals}}
           {{/with}}
+          {{#if answer.correct}}
+          <h3>
+            <div class="badge badge-success">Mejor respuesta</div>
+          </h3>
+          {{/if}}
         </div>
       </div>
     </div>
@@ -32,6 +39,7 @@
     <div class="card-header">
       <h3>Responder</h3>
     </div>
+    {{#if user}}
     <div class="card-body">
       <div class="row">
         <div class="col">
@@ -49,6 +57,11 @@
         </div>
       </div>
     </div>
+    {{else}}
+    <div class="card-body text-center mt-2">
+      <a href="/login" class="btn btn-primary">Inicia sesión para añadir una respuesta</a>
+    </div>
+    {{/if}}
   </div>
 
 </div>
