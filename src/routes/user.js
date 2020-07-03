@@ -1,7 +1,7 @@
 'use strict'
 
 const userController = require('../controllers/user');
-const validSchema = require('../schemas/user');
+const userSchema = require('../schemas/user');
 
 module.exports = [
   // Create user by POST
@@ -10,7 +10,7 @@ module.exports = [
     path: '/singup',
     options: {
       validate: {
-        payload: validSchema.userRegisterSchema,
+        payload: userSchema.userRegisterSchema,
         failAction: userController.failValidation,
       },
     },
@@ -23,7 +23,7 @@ module.exports = [
     path: '/login',
     options: {
       validate: {
-        payload: validSchema.userLoginSchema,
+        payload: userSchema.userLoginSchema,
         failAction: userController.failValidation,
       },
     },
