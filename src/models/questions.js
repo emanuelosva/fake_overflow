@@ -22,6 +22,15 @@ class Questions {
     return orderedData;
   };
 
+  async getOne(id) {
+    const query = await this.collection
+      .child(id)
+      .once('value');
+
+    const data = query.val();
+    return data;
+  };
+
   async create(data, user) {
     data.owner = user;
     const question = this.collection.push();
