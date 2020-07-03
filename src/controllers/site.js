@@ -31,6 +31,17 @@ const renderLoginView = (req, h) => {
   });
 };
 
+const renderQuestionView = async (req, h) => {
+  if (!req.state.user) {
+    return h.redirect('/login');
+  }
+
+  return h.view('ask', {
+    title: 'Nueva pregunta',
+    user: req.state.user
+  });
+};
+
 const notFoundResponse = (req, h) => {
   const accept = req.headers.accept
 
@@ -54,6 +65,7 @@ module.exports = {
   renderHomeView,
   renderRegisterView,
   renderLoginView,
+  renderQuestionView,
   notFoundResponse,
   fileNotFound,
 };

@@ -6,6 +6,7 @@
 const siteController = require('../controllers/site');
 
 module.exports = [
+  // Static files
   {
     method: 'GET',
     path: '/assets/{param*}',
@@ -31,13 +32,21 @@ module.exports = [
     handler: siteController.renderRegisterView,
   },
 
-  // login view
+  // Login view
   {
     method: 'GET',
     path: '/login',
     handler: siteController.renderLoginView,
   },
 
+  // Create question view
+  {
+    method: 'GET',
+    path: '/new-question',
+    handler: siteController.renderQuestionView,
+  },
+
+  // 404 view
   {
     method: ['GET', 'POST'],
     path: '/{any*}',

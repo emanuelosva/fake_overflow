@@ -11,6 +11,7 @@ const siteController = require('./controllers/site');
 
 const siteRoutes = require('./routes/site');
 const userRoutes = require('./routes/user');
+const questionRoutes = require('./routes/question');
 
 const { DAY_IN_MILISECODS } = require('./utils/time');
 
@@ -52,6 +53,7 @@ const init = async () => {
     // Routes
     server.ext('onPreResponse', siteController.fileNotFound);
     server.route(userRoutes);
+    server.route(questionRoutes);
     server.route(siteRoutes);
 
     // Start server
