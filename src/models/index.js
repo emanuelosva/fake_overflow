@@ -15,7 +15,9 @@ const db = admin.database();
 
 // ORM emulation
 const Users = require('./users');
+const Questions = require('./questions');
 
 module.exports = {
   usersModel: new Users(db),
+  questionsModel: new Questions(db),
 };
