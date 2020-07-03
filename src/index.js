@@ -3,7 +3,7 @@
 const Hapi = require('@hapi/hapi');
 const inert = require('@hapi/inert');
 const vision = require('@hapi/vision');
-const handlebars = require('handlebars');
+const handlebars = require('./lib/helpers');
 const path = require('path');
 const config = require('../config');
 
@@ -14,12 +14,6 @@ const userRoutes = require('./routes/user');
 const questionRoutes = require('./routes/question');
 
 const { DAY_IN_MILISECODS } = require('./utils/time');
-
-// Handlerbasr heleper
-handlebars.registerHelper('numAnswers', (answers) => {
-  return Object.keys(answers).length;
-});
-
 
 // Server initialization
 const init = async () => {
