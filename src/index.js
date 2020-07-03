@@ -6,6 +6,7 @@ const vision = require('@hapi/vision');
 const handlebars = require('./lib/helpers');
 const path = require('path');
 const config = require('../config');
+const methods = require('./lib/methods');
 
 const siteController = require('./controllers/site');
 
@@ -32,6 +33,9 @@ const init = async () => {
     // Plugins
     await server.register(inert);
     await server.register(vision);
+
+    // Server methods
+    server.method('setAnswerRight', methods.setAnswerRight);
 
     //  Cokies
     server.state('user', {
