@@ -24,8 +24,6 @@ const answerQuestion = async (req, h) => {
     const result = await questionsModel
       .addAnswer(req.payload, req.state.user);
 
-    console.log(`Respuesta creada. ID:${result}`);
-
     return h.redirect(`/question?id=${req.payload.id}`);
   } catch (error) {
     console.error(`[questionController] ${error}`);

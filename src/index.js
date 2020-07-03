@@ -15,6 +15,11 @@ const questionRoutes = require('./routes/question');
 
 const { DAY_IN_MILISECODS } = require('./utils/time');
 
+// Handlerbasr heleper
+handlebars.registerHelper('numAnswers', (answers) => {
+  return Object.keys(answers).length;
+});
+
 
 // Server initialization
 const init = async () => {
