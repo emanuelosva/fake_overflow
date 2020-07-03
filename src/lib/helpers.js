@@ -8,6 +8,11 @@ const registerHelpers = () => {
     return Object.keys(answers).length;
   });
 
+  handlebars.registerHelper('ifEquals', (a, b, options) => {
+    if (a === b) return options.fn(this);
+    return options.inverse(this);
+  });
+
   return handlebars
 };
 
