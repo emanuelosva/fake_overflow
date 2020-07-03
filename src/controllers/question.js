@@ -4,6 +4,8 @@ const { questionsModel } = require('../models');
 const { internalServerErrorResponse } = require('./site');
 
 const createQuestion = async (req, h) => {
+  if (!req.state.user) return h.redirect('/login');
+
   try {
     const result = await questionsModel
       .create({ ...req.payload }, req.state.user);
@@ -20,6 +22,8 @@ const createQuestion = async (req, h) => {
 };
 
 const answerQuestion = async (req, h) => {
+  if (!req.state.user) return h.redirect('/login');
+
   try {
     const result = await questionsModel
       .addAnswer(req.payload, req.state.user);
@@ -32,6 +36,8 @@ const answerQuestion = async (req, h) => {
 };
 
 const setAnswerRight = async (req, h) => {
+  if (!req.state.user) return h.redirect('/login');
+
   try {
     const result = await req.server
       .methods
