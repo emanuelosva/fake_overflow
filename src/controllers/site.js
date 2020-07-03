@@ -6,11 +6,29 @@
 const user = require("./user");
 const Boom = require("@hapi/boom");
 
-const renderHomeView = (req, h) => {
-  return h.view('index', {
-    title: 'Home',
-    user: req.state.user
-  });
+const { questionsModel } = require('../models');
+
+const renderHomeView = async (req, h) => {
+  try {
+    const amountQuestions = 10;
+    const data = await questionsModel.getLast(amountQuestions);
+
+    return h.view('index', {
+      title: 'Home',
+      user: req.state.user,
+      questions: data,
+      error: null,
+    });
+  } catch (error) {
+    console.error(`[HomeView] ${error}`);
+
+    return h.view('index', {
+      title: 'Home',
+      user: req.state.user,
+      questions: null,
+      error: 'Error al cargar las preguntas',
+    });
+  }
 }
 
 const renderRegisterView = (req, h) => {
