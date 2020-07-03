@@ -69,7 +69,7 @@ class Questions {
       .child('answers')
       .update(answers);
 
-    return update.key;
+    return update;
   };
 }
 
