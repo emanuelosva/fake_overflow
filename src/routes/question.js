@@ -33,7 +33,7 @@ module.exports = [
 
   // Set right aswer
   {
-    method: 'POST',
+    method: 'GET',
     path: '/answer/{questionId}/{answerId}',
     handler: questionController.setAnswerRight,
   },
