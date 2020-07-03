@@ -18,4 +18,17 @@ module.exports = [
     handler: questionController.createQuestion,
   },
 
+  // Add new aswer to Question
+  {
+    method: 'POST',
+    path: '/answer-question',
+    options: {
+      validate: {
+        payload: questionSchema.validAnswer,
+        failAction: questionController.failValidation,
+      },
+    },
+    handler: questionController.answerQuestion,
+  },
+
 ];

@@ -7,6 +7,12 @@ const validQuestion = Joi.object({
   description: Joi.string().required(),
 });
 
+const validAnswer = Joi.object({
+  answer: Joi.string().required(),
+  id: Joi.string().required(),
+});
+
 module.exports = {
   validQuestion,
+  validAnswer,
 };
