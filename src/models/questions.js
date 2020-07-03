@@ -38,6 +38,17 @@ class Questions {
 
     return question.key;
   };
+
+  async addAnswer(data, user) {
+    const answers = await this.collection
+      .child(data.id)
+      .child('answers')
+      .push();
+
+    answers.set({ text: data.answer, user: user });
+
+    return answers;
+  };
 }
 
 module.exports = Questions;
