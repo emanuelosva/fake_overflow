@@ -5,7 +5,7 @@ const { questionsModel } = require('../models');
 const setAnswerRight = async (questionId, answerId, user) => {
   try {
     const result = await questionsModel
-      .setRightAnswer(questionId, answerId, user);
+      .setAnswerRight(questionId, answerId, user);
 
     return result
   } catch (error) {
