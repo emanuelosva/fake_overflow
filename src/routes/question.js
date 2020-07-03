@@ -1,6 +1,7 @@
 'use strict';
 
 const questionController = require('../controllers/question');
+const questionSchema = require('../schemas/question');
 
 module.exports = [
 
@@ -8,6 +9,13 @@ module.exports = [
   {
     method: 'POST',
     path: '/new-question',
+    options: {
+      validate: {
+        payload: questionSchema.validQuestion,
+        failAction: questionController.failValidation,
+      },
+    },
     handler: questionController.createQuestion,
   },
+
 ];
