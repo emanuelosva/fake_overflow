@@ -6,6 +6,7 @@
 const siteController = require('../controllers/site');
 
 module.exports = [
+
   // Static files
   {
     method: 'GET',
@@ -13,7 +14,7 @@ module.exports = [
     handler: {
       directory: {
         path: '.',
-        index: ['index.html']
+        index: false,
       }
     }
   },
@@ -44,6 +45,13 @@ module.exports = [
     method: 'GET',
     path: '/new-question',
     handler: siteController.renderQuestionView,
+  },
+
+  // One question view
+  {
+    method: 'GET',
+    path: '/question',
+    handler: siteController.renerOneQuestionView,
   },
 
   // 404 view
