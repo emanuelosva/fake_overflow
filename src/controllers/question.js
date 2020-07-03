@@ -1,6 +1,7 @@
 'use strict';
 
 const { questionsModel } = require('../models');
+const { internalServerErrorResponse } = require('./site');
 
 const createQuestion = async (req, h) => {
   try {
@@ -9,12 +10,26 @@ const createQuestion = async (req, h) => {
 
     return h.response(`Pregunta creada. ID: ${result}`).code(200);
   } catch (error) {
-    console.error(`[questionController] Error: ${error}`);
+    console.error(`[questionController] ${error}`);
 
     return h.view('ask', {
       title: 'Nueva pregunta - Error',
       error: 'Problemas creando la pregunta',
     }).code(500).takeover();
+  }
+};
+
+const answerQuestion = async (req, h) => {
+  try {
+    const result = await questionsModel
+      .addAnswer(req.payload, req.state.user);
+
+    console.log(`Respuesta creada. ID:${result}`);
+
+    return h.redirect(`/question?id=${req.payload.id}`);
+  } catch (error) {
+    console.error(`[questionController] ${error}`);
+    return internalServerErrorResponse(req, h);
   }
 };
 
@@ -40,5 +55,6 @@ const failValidation = async (req, h, err) => {
 
 module.exports = {
   createQuestion,
+  answerQuestion,
   failValidation,
 };

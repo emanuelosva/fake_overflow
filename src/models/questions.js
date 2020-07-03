@@ -47,7 +47,7 @@ class Questions {
 
     answers.set({ text: data.answer, user: user });
 
-    return answers;
+    return answers.key;
   };
 }
 
