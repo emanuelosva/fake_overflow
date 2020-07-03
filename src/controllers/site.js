@@ -60,6 +60,26 @@ const renderQuestionView = async (req, h) => {
   });
 };
 
+const renerOneQuestionView = async (req, h) => {
+  try {
+    const id = req.query.id;
+    const data = await questionsModel.getOne(id)
+
+    if (!data) return notFoundResponse(req, h);
+
+    return h.view('question', {
+      title: 'Detalles de la pregunta',
+      user: req.state.user,
+      question: data,
+      key: id,
+    });
+  } catch (error) {
+    console.error(`[QuestionView] ${error}`);
+
+    return internalServerErrorResponse(req, h);
+  }
+};
+
 const notFoundResponse = (req, h) => {
   const accept = req.headers.accept
 
@@ -79,11 +99,17 @@ const fileNotFound = (req, h) => {
   return h.continue;
 };
 
+const internalServerErrorResponse = (req, h) => {
+  return h.view('500', {}, { layout: 'error-layout' }).code(500);
+};
+
 module.exports = {
   renderHomeView,
   renderRegisterView,
   renderLoginView,
   renderQuestionView,
+  renerOneQuestionView,
   notFoundResponse,
   fileNotFound,
+  internalServerErrorResponse,
 };
