@@ -14,21 +14,23 @@ const createQuestion = async (req, h) => {
   if (!req.state.user) return h.redirect('/login');
 
   try {
-    const data = { ...req.payload };
-    let filename;
+    const { payload } = req;
 
-    if (Buffer.isBuffer(data.image)) {
+    let filename;
+    let buff = Buffer.from(payload.image);
+
+    if (Buffer.isBuffer(buff)) {
       filename = `${uuidv1()}.png`;
       await write(
         join(__dirname, '..', '..', 'public', 'uploads', filename),
-        data
+        payload.image,
       );
     }
 
     const result = await questionsModel
-      .create(data, req.state.user, filename);
+      .create(payload, req.state.user, filename);
 
-    return h.response(`Pregunta creada. ID: ${result}`).code(200);
+    return h.redirect(`/question?id=${result}`);
   } catch (error) {
     console.error(`[questionController] ${error}`);
 

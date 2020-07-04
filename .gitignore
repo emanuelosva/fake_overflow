@@ -117,3 +117,6 @@ dist
 
 # Firebase files
 firebase.json
+
+# Uploads
+public/uploads
