@@ -13,7 +13,7 @@
             </div>
           </div>
           {{/with}}
-          <form method="POST" action="/new-question">
+          <form method="POST" action="/new-question" enctype="multipart/form-data">
             <div class="form-group">
               <label for="title">Título</label>
               <input type="text" class="form-control" id="title" name="title" placeholder="Ingrese el título" required>
@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
               <label for="image">Imagen(PNG)</label>
-              <input type="file" id="image" name="image" accept="image/png" />
+              <input type="file" id="image" name="image" accept="image/png">
             </div>
             <div class="text-center mt-5">
               <button type="submit" class="btn btn-primary">Crear Pregunta</button>
