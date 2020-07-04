@@ -7,27 +7,27 @@
 
   {{#each question.answers as |answer key| }}
   <div class="alert {{#if answer.correct}}alert-success{{else}}alert-info{{/if}}" role="alert">
-    <p>{{answer.text}}</p>
+    <p class="w-100">{{answer.text}}</p>
     <hr>
     <div class="container">
       <div class="row">
-        <div class="col-sm">
+        <div class="col-12 col-md-6 mb-2">
           Creada por <strong>{{answer.user.name}}</strong>
         </div>
-        <div class="col-sm text-right">
+        <div class="col-12 col-md-6 text-right">
           {{#with user}}
           {{#ifEquals ../../question.owner.email ../../user.email}}
           {{#unless answer.correct}}
           <a href="/answer/{{../../../key}}/{{key}}" class="btn btn-primary" role="button">
-            Marca como mejor respuesta
+            Marca como <br> mejor respuesta
           </a>
           {{/unless}}
           {{/ifEquals}}
           {{/with}}
           {{#if answer.correct}}
-          <h3>
+          <h4>
             <div class="badge badge-success">Mejor respuesta</div>
-          </h3>
+          </h4>
           {{/if}}
         </div>
       </div>
