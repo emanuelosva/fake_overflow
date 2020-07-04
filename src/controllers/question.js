@@ -12,23 +12,20 @@ const write = promisify(writeFile);
 
 const createQuestion = async (req, h) => {
   if (!req.state.user) return h.redirect('/login');
-
   try {
-    const { payload } = req;
-
+    const data = { ...req.payload };
     let filename;
-    let buff = Buffer.from(payload.image);
 
-    if (Buffer.isBuffer(buff)) {
+    if (Buffer.isBuffer(data.image)) {
       filename = `${uuidv1()}.png`;
       await write(
         join(__dirname, '..', '..', 'public', 'uploads', filename),
-        payload.image,
+        data.image,
       );
     }
 
     const result = await questionsModel
-      .create(payload, req.state.user, filename);
+      .create(data, req.state.user, filename);
 
     return h.redirect(`/question?id=${result}`);
   } catch (error) {
