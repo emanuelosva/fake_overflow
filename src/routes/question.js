@@ -2,6 +2,7 @@
 
 const questionController = require('../controllers/question');
 const questionSchema = require('../schemas/question');
+const { fileNotFound } = require('../controllers/site');
 
 module.exports = [
 
@@ -10,6 +11,10 @@ module.exports = [
     method: 'POST',
     path: '/new-question',
     options: {
+      payload: {
+        parse: true,
+        multipart: true,
+      },
       validate: {
         payload: questionSchema.validQuestion,
         failAction: questionController.failValidation,
