@@ -11,7 +11,9 @@ const { questionsModel } = require('../models');
 const renderHomeView = async (req, h) => {
   try {
     const amountQuestions = 10;
-    const data = await questionsModel.getLast(amountQuestions);
+
+    // Get data from server method with caché
+    const data = await req.server.methods.getLast(amountQuestions);
 
     return h.view('index', {
       title: 'Home',

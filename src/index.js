@@ -14,7 +14,7 @@ const siteRoutes = require('./routes/site');
 const userRoutes = require('./routes/user');
 const questionRoutes = require('./routes/question');
 
-const { DAY_IN_MILISECODS } = require('./utils/time');
+const time = require('./utils/time');
 
 // Server initialization
 const init = async () => {
@@ -36,10 +36,16 @@ const init = async () => {
 
     // Server methods
     server.method('setAnswerRight', methods.setAnswerRight);
+    server.method('getLast', methods.getLast, {
+      cache: {
+        expiresIn: time.MINUTE_IN_MILESECODS,
+        generateTimeout: 2000,
+      },
+    });
 
     //  Cokies
     server.state('user', {
-      ttl: DAY_IN_MILISECODS * 3,
+      ttl: time.DAY_IN_MILISECODS * 3,
       isSecure: process.env.NODE_ENV === 'production',
       encoding: 'base64json',
     });
