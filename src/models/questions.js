@@ -31,8 +31,15 @@ class Questions {
     return data;
   };
 
-  async create(data, user) {
-    data.owner = user;
+  async create(info, user, filename) {
+    const data = {
+      description: info.description,
+      title: info.title,
+      owner: user
+    };
+
+    filename ? data.filename = filename : null;
+
     const question = this.collection.push();
     question.set(data)
 

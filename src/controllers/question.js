@@ -1,14 +1,32 @@
 'use strict';
 
+const { writeFile } = require('fs')
+const { promisify } = require('util');
+const { join } = require('path');
+const { v1: uuidv1 } = require('uuid');
 const { questionsModel } = require('../models');
 const { internalServerErrorResponse } = require('./site');
+
+// Write async with promise
+const write = promisify(writeFile);
 
 const createQuestion = async (req, h) => {
   if (!req.state.user) return h.redirect('/login');
 
   try {
+    const data = { ...req.payload };
+    let filename;
+
+    if (Buffer.isBuffer(data.image)) {
+      filename = `${uuidv1()}.png`;
+      await write(
+        join(__dirname, '..', '..', 'public', 'uploads', filename),
+        data
+      );
+    }
+
     const result = await questionsModel
-      .create({ ...req.payload }, req.state.user);
+      .create(data, req.state.user, filename);
 
     return h.response(`Pregunta creada. ID: ${result}`).code(200);
   } catch (error) {
