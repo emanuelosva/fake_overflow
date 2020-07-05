@@ -12,7 +12,7 @@ const createUser = async (req, h) => {
 
     return h.redirect('/login');
   } catch (error) {
-    console.error(`[usersController] Error: ${error}`);
+    req.log('UsersController-Error', error);
     return h.view('register', {
       title: 'Registro',
       error: 'Error creando el usuario',
@@ -37,7 +37,7 @@ const loginUser = async (req, h) => {
         email: result.email,
       });
   } catch (error) {
-    console.error(`[usersController] Error: ${error}`);
+    req.log('UsersController-Error', error);
 
     return h.view('500', {}, { layout: 'error-layout' });
   }

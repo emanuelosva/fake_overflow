@@ -29,7 +29,7 @@ const createQuestion = async (req, h) => {
 
     return h.redirect(`/question?id=${result}`);
   } catch (error) {
-    console.error(`[questionController] ${error}`);
+    req.log('QuestionController-Error', error);
 
     return h.view('ask', {
       title: 'Nueva pregunta - Error',
@@ -47,7 +47,7 @@ const answerQuestion = async (req, h) => {
 
     return h.redirect(`/question?id=${req.payload.id}`);
   } catch (error) {
-    console.error(`[questionController] ${error}`);
+    req.log('QuestionController-Error', error);
     return internalServerErrorResponse(req, h);
   }
 };
@@ -66,7 +66,7 @@ const setAnswerRight = async (req, h) => {
 
     return h.redirect(`/question?id=${req.params.questionId}`);
   } catch (error) {
-    console.error(`[questionController] ${error}`);
+    req.log('QuestionController-Error', error);
     return internalServerErrorResponse(req, h);
   }
 };

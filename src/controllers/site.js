@@ -22,7 +22,7 @@ const renderHomeView = async (req, h) => {
       error: null,
     });
   } catch (error) {
-    console.error(`[HomeView] ${error}`);
+    req.log('HomeView-Error', error);
 
     return h.view('index', {
       title: 'Home',
@@ -76,8 +76,7 @@ const renerOneQuestionView = async (req, h) => {
       key: id,
     });
   } catch (error) {
-    console.error(`[QuestionView] ${error}`);
-
+    req.log('QuestionView-Error', error);
     return internalServerErrorResponse(req, h);
   }
 };
