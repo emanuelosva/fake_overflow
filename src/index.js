@@ -3,6 +3,7 @@
 const Hapi = require('@hapi/hapi');
 const inert = require('@hapi/inert');
 const vision = require('@hapi/vision');
+const good = require('@hapi/good');
 const handlebars = require('./lib/helpers');
 const path = require('path');
 const config = require('../config');
@@ -33,6 +34,19 @@ const init = async () => {
     // Plugins
     await server.register(inert);
     await server.register(vision);
+    await server.register({
+      plugin: good,
+      options: {
+        reporters: {
+          console: [
+            {
+              module: '@hapi/good-console',
+            },
+            'stdout'
+          ]
+        },
+      }
+    });
 
     // Server methods
     server.method('setAnswerRight', methods.setAnswerRight);
@@ -67,10 +81,10 @@ const init = async () => {
 
     // Start server
     await server.start();
-    console.log(`Server running on ${server.info.uri}`);
+    server.log('info', `Server running on ${server.info.uri}`);
 
   } catch (error) {
-    console.error(`Server error: ${error}`);
+    server.log('ServerError', error);
     process.exit(1);
   }
 };
