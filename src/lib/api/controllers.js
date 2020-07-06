@@ -5,7 +5,7 @@ const { questionsModel } = require('../../models');
 
 const getOne = async (req, h) => {
   let result;
-  const id = req.params.id;
+  const id = req.params.key;
   try {
     result = await questionsModel.getOne(id);
     !result
