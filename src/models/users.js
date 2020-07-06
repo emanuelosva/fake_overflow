@@ -28,8 +28,8 @@ class Users {
     const userFound = userQuery.val();
     if (userFound) {
       const userId = Object.keys(userFound)[0];
-      const correctPassword = await encrypt.
-        compare(data.password, userFound[userId].password);
+      const correctPassword = await encrypt
+        .compare(data.password, userFound[userId].password);
 
       const result = correctPassword ? userFound[userId] : false;
 
