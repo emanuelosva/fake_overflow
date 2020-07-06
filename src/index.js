@@ -1,6 +1,7 @@
 'use strict';
 
 const Hapi = require('@hapi/hapi');
+const crumb = require('@hapi/crumb');
 const inert = require('@hapi/inert');
 const vision = require('@hapi/vision');
 const good = require('@hapi/good');
@@ -46,6 +47,14 @@ const init = async () => {
           ]
         },
       }
+    });
+    await server.register({
+      plugin: crumb,
+      options: {
+        cookieOptions: {
+          isSecure: process.env.NODE_ENV === 'production'
+        }
+      },
     });
     await server.register({
       plugin: require('./lib/api'),
