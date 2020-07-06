@@ -2,6 +2,8 @@
 
 const Hapi = require('@hapi/hapi');
 const crumb = require('@hapi/crumb');
+const Scooter = require('@hapi/scooter');
+const Blankie = require('blankie');
 const inert = require('@hapi/inert');
 const vision = require('@hapi/vision');
 const good = require('@hapi/good');
@@ -35,6 +37,7 @@ const init = async () => {
     // Plugins
     await server.register(inert);
     await server.register(vision);
+
     await server.register({
       plugin: good,
       options: {
@@ -48,6 +51,7 @@ const init = async () => {
         },
       }
     });
+
     await server.register({
       plugin: crumb,
       options: {
@@ -56,6 +60,18 @@ const init = async () => {
         }
       },
     });
+
+    await server.register([Scooter, {
+      plugin: Blankie,
+      options: {
+        defaultSrc: `'self' 'unsafe-inline'`,
+        styleSrc: `'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com`,
+        fontSrc: `'self' 'unsafe-inline' data:`,
+        scriptSrc: `'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com/ https://code.jquery.com/`,
+        generateNonces: false,
+      },
+    }]);
+
     await server.register({
       plugin: require('./lib/api'),
       options: { prefix: 'api' }
