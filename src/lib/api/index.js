@@ -1,5 +1,6 @@
 'use estrict';
 
+const authBasic = require('@hapi/basic');
 const schemas = require('./schemas');
 const apiControllers = require('./controllers');
 
@@ -9,6 +10,14 @@ module.exports = {
   async register(server, options) {
     const prefix = options.prefix || 'api';
 
+    // Plugins
+    await server.register(authBasic);
+
+    // Auth
+    server.auth.strategy('simple', 'basic', {
+      validate: apiControllers.validateAuth
+    })
+
     // Api Routes
     server.route([
 
@@ -17,6 +26,7 @@ module.exports = {
         method: 'GET',
         path: `/${prefix}/question/{key}`,
         options: {
+          auth: 'simple',
           validate: {
             params: schemas.getOneSchema,
             failAction: apiControllers.failValidation,
@@ -30,6 +40,7 @@ module.exports = {
         method: 'GET',
         path: `/${prefix}/questions/{amount}`,
         options: {
+          auth: 'simple',
           validate: {
             params: schemas.getLastSchema,
             failAction: apiControllers.failValidation,

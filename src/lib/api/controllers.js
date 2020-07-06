@@ -1,7 +1,10 @@
 'use strict';
 
 const Boom = require('@hapi/boom');
-const { questionsModel } = require('../../models');
+const { questionsModel, usersModel } = require('../../models');
+const { server } = require('@hapi/hapi');
+
+// Route Handlers
 
 const getOne = async (req, h) => {
   let result;
@@ -35,8 +38,30 @@ const getLast = async (req, h) => {
   return result;
 };
 
+
+// Validation route params
 const failValidation = (req, h, err) => {
   return Boom.badRequest('Por favor intruduzca los parámetros correctos')
+};
+
+
+// API auth
+const validateAuth = async (req, username, password, h) => {
+  let user;
+  try {
+    user = await usersModel
+      .validateUser({
+        email: username,
+        password: password,
+      });
+  } catch (error) {
+    server.log('Api-Error', error);
+  }
+
+  return {
+    credentials: user || {},
+    isValid: (user !== false),
+  };
 };
 
 
@@ -44,4 +69,5 @@ module.exports = {
   getOne,
   getLast,
   failValidation,
+  validateAuth,
 };
