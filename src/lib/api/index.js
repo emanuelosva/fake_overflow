@@ -10,7 +10,7 @@ module.exports = {
     const prefix = options.prefix || 'api';
 
     // Api Routes
-    server.route(
+    server.route([
 
       // Get a question by id
       {
@@ -28,7 +28,7 @@ module.exports = {
       // Get the first -amount- questions
       {
         method: 'GET',
-        path: `/${prefix}/question/{amount}`,
+        path: `/${prefix}/questions/{amount}`,
         options: {
           validate: {
             params: schemas.getLastSchema,
@@ -37,7 +37,6 @@ module.exports = {
         },
         handler: apiControllers.getLast,
       },
-
-    );
+    ]);
   }
 };
