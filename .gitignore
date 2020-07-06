@@ -118,5 +118,8 @@ dist
 # Firebase files
 firebase.json
 
+# Gcloud
+.gcloudignore
+
 # Uploads
 public/uploads
