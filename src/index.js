@@ -47,6 +47,10 @@ const init = async () => {
         },
       }
     });
+    await server.register({
+      plugin: require('./lib/api'),
+      options: { prefix: 'api' }
+    });
 
     // Server methods
     server.method('setAnswerRight', methods.setAnswerRight);
