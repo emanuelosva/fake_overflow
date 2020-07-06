@@ -7,6 +7,7 @@ const Blankie = require('blankie');
 const inert = require('@hapi/inert');
 const vision = require('@hapi/vision');
 const good = require('@hapi/good');
+const HapiSwagger = require('hapi-swagger');
 const hapiDevErrors = require('hapi-dev-errors');
 const handlebars = require('./lib/helpers');
 const path = require('path');
@@ -74,11 +75,23 @@ const init = async () => {
     }]);
 
     await server.register({
-      plugin: require('hapi-dev-errors'),
+      plugin: hapiDevErrors,
       options: {
         showErrors: process.env.NODE_ENV !== 'production'
       }
     });
+
+    // API plugins
+    await server.register({
+      plugin: HapiSwagger,
+      options: {
+        documentationPath: '/api/documentation',
+        basePath: '/api',
+        info: {
+          'title': 'Api Documentation',
+        }
+      },
+    })
 
     await server.register({
       plugin: require('./lib/api'),

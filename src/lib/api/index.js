@@ -26,6 +26,7 @@ module.exports = {
         method: 'GET',
         path: `/${prefix}/question/{key}`,
         options: {
+          tags: ['api'],
           auth: 'simple',
           validate: {
             params: schemas.getOneSchema,
@@ -40,6 +41,7 @@ module.exports = {
         method: 'GET',
         path: `/${prefix}/questions/{amount}`,
         options: {
+          tags: ['api'],
           auth: 'simple',
           validate: {
             params: schemas.getLastSchema,
