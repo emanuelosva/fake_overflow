@@ -10,7 +10,7 @@ const { questionsModel } = require('../models');
 
 const renderHomeView = async (req, h) => {
   try {
-    const amountQuestions = 10;
+    const amountQuestions = 50;
 
     // Get data from server method with caché
     const data = await req.server.methods.getLast(amountQuestions);
