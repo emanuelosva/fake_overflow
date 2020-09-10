@@ -33,4 +33,5 @@ You can fin the Demo App at this [LINK](https://platzioverflow-a9254.ue.r.appspo
 
 ### Author
 Emanuel Osorio
+(This site was development in the course: ["Curso de Node.js con Hapi"](https://platzi.com/clases/hapi-js/) )
 > email: emanuelosva@gmail.com
